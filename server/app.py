@@ -29,7 +29,7 @@ def get_owners():
 def get_owner_by_id(id):
     owner = Owner.query.filter(Owner.id == id).first()
     print(owner)
-    return jsonify(owner.to_dict(rules=('-cars',))), 201
+    return jsonify(owner.to_dict()), 201
 
 @app.delete('/owners/<int:id>')
 def delete_owner(id):
@@ -41,7 +41,7 @@ def delete_owner(id):
 @app.get('/dealerships')
 def get_dealerships():
     dealerships = Dealership.query.all()
-    return jsonify([dealership.to_dict(rules=('-cars',)) for dealership in dealerships]), 200
+    return jsonify([dealership.to_dict(rules=('-cars.owner','-cars.date_sold', '-cars.id')) for dealership in dealerships]), 200
 
 @app.get('/dealerships/<int:id>')
 def get_dealerships_by_id(id):
